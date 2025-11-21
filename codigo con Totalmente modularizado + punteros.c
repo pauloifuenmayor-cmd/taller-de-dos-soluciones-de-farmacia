@@ -138,8 +138,9 @@ void calcular_totales(float *t, int *r, int *d) {
     long R = 0;
 
     for (int i = 0; i < N; i++) {
-        T += t[i] * d[i];
-        R += r[i] * d[i];
+        T += (*(t + i)) * (*(d + i));
+        R += (*(r + i)) * (*(d + i));
+
     }
 
     printf("\nTiempo total: %.2f\n", T);
@@ -175,3 +176,4 @@ int main() {
 
     return 0;
 }
+
