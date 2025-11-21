@@ -75,9 +75,9 @@ void ingresar_producto(int idx, char nombres[][MAX],
                        float *t, int *r, int *d) {
     printf("\n--- Producto %d ---\n", idx + 1);
     leer_nombre(nombres[idx], "Nombre: ");
-    *(t + idx) = leer_float("Tiempo (h): ");
-    *(r + idx) = leer_entero("Recursos requeridos: ");
-    *(d + idx) = leer_entero("Demanda: ");
+    t[idx] = leer_float("Tiempo (h): ");
+    r[idx] = leer_entero("Recursos requeridos: ");
+    d[idx] = leer_entero("Demanda: ");
 }
 
 void mostrar_todo(char nombres[][MAX], float *t, int *r, int *d) {
@@ -85,7 +85,7 @@ void mostrar_todo(char nombres[][MAX], float *t, int *r, int *d) {
     for (int i = 0; i < N; i++) {
         printf("%d) %s\n", i + 1, nombres[i]);
         printf("   T: %.2f | R: %d | D: %d\n",
-               *(t + i), *(r + i), *(d + i));
+               t[i], r[i], d[i]);
     }
 }
 
@@ -103,9 +103,9 @@ void editar_producto(char nombres[][MAX], float *t, int *r, int *d) {
     int op = leer_entero("Opción: ");
 
     if (op == 1) leer_nombre(nombres[idx], "Nuevo nombre: ");
-    else if (op == 2) *(t + idx) = leer_float("Nuevo tiempo: ");
-    else if (op == 3) *(r + idx) = leer_entero("Nuevos recursos: ");
-    else if (op == 4) *(d + idx) = leer_entero("Nueva demanda: ");
+    else if (op == 2) t[idx] = leer_float("Nuevo tiempo: ");
+    else if (op == 3) r[idx] = leer_entero("Nuevos recursos: ");
+    else if (op == 4) d[idx] = leer_entero("Nueva demanda: ");
 }
 
 void eliminar_producto(char nombres[][MAX], float *t, int *r, int *d) {
@@ -120,15 +120,15 @@ void eliminar_producto(char nombres[][MAX], float *t, int *r, int *d) {
 
     for (int i = idx; i < N - 1; i++) {
         strcpy(nombres[i], nombres[i + 1]);
-        *(t + i) = *(t + i + 1);
-        *(r + i) = *(r + i + 1);
-        *(d + i) = *(d + i + 1);
+        t[i] = t[i + 1];
+        r[i] = r[i + 1];
+        d[i] = d[i + 1];
     }
 
     strcpy(nombres[N - 1], "ELIMINADO");
-    *(t + N - 1) = 0;
-    *(r + N - 1) = 0;
-    *(d + N - 1) = 0;
+    t[N - 1] = 0;
+    r[N - 1] = 0;
+    d[N - 1] = 0;
 
     printf("Eliminado correctamente.\n");
 }
@@ -138,8 +138,8 @@ void calcular_totales(float *t, int *r, int *d) {
     long R = 0;
 
     for (int i = 0; i < N; i++) {
-        T += (*(t + i)) * (*(d + i));
-        R += (*(r + i)) * (*(d + i));
+        T += t[i] * d[i];
+        R += r[i] * d[i];
     }
 
     printf("\nTiempo total: %.2f\n", T);
